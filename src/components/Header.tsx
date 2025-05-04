@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { GoldProvider } from '@/types';
-import { Calendar } from 'lucide-react';
+import { Calendar, Award } from 'lucide-react';
 
 interface HeaderProps {
   selectedProvider: GoldProvider;
@@ -21,6 +21,22 @@ const Header = ({ selectedProvider, onProviderChange, lastUpdated }: HeaderProps
     
     return () => clearInterval(timer);
   }, []);
+
+  // Logo URLs for each provider
+  const providerLogos: Record<GoldProvider, { logo: string, color: string }> = {
+    'SJC': { 
+      logo: 'https://www.sjc.com.vn/upload/images/logo/logo.png',
+      color: 'from-yellow-500 to-amber-700'
+    },
+    'DOJI': { 
+      logo: 'https://doji.vn/wp-content/uploads/2022/02/logo-1.png',
+      color: 'from-blue-600 to-blue-800'
+    },
+    'PNJ': { 
+      logo: 'https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-PNJ-V.png',
+      color: 'from-red-600 to-red-800'
+    }
+  };
   
   return (
     <header className="relative z-10 w-full backdrop-blur-md bg-white/50 dark:bg-navy-900/50 shadow-sm">
@@ -47,18 +63,41 @@ const Header = ({ selectedProvider, onProviderChange, lastUpdated }: HeaderProps
         </div>
         
         <Tabs defaultValue={selectedProvider} className="w-full" onValueChange={(value) => onProviderChange(value as GoldProvider)}>
-          <TabsList className="grid w-full grid-cols-3 h-14 mb-4 bg-white/50 dark:bg-navy-800/50 backdrop-blur rounded-xl shadow-inner">
+          <TabsList className="grid w-full grid-cols-3 h-20 mb-4 bg-white/50 dark:bg-navy-800/50 backdrop-blur rounded-xl shadow-inner">
             {['SJC', 'DOJI', 'PNJ'].map(provider => (
               <TabsTrigger 
                 key={provider}
                 value={provider} 
-                className={`text-xl font-medium transition-all duration-300 ${
+                className={`text-xl font-medium transition-all duration-300 flex flex-col items-center justify-center gap-2 py-2 ${
                   selectedProvider === provider 
                     ? 'text-gold-600 dark:text-gold-400 bg-white dark:bg-navy-700/50 shadow-md' 
                     : 'hover:text-gold-500 dark:hover:text-gold-500'
                 }`}
               >
-                {provider}
+                <div className="relative w-full flex items-center justify-center">
+                  {selectedProvider === provider && (
+                    <div className={`absolute -top-1 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br ${providerLogos[provider as GoldProvider].color} rounded-full -z-10 blur-md opacity-60`}></div>
+                  )}
+                  <div className="h-8 w-auto flex items-center justify-center">
+                    <img 
+                      src={providerLogos[provider as GoldProvider].logo} 
+                      alt={`${provider} Logo`} 
+                      className="h-full object-contain max-w-[70px]"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          const icon = document.createElement('div');
+                          icon.innerHTML = `<span class="flex items-center justify-center"><Award class="h-6 w-6" /></span>`;
+                          parent.appendChild(icon);
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+                <span>{provider}</span>
               </TabsTrigger>
             ))}
           </TabsList>
