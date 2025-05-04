@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -87,8 +87,13 @@
     font-family: 'Inter', sans-serif;
   }
 
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+  }
+
   body {
     @apply bg-background text-foreground;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDAwMDAiIGZpbGwtb3BhY2l0eT0iLjAzIj48cGF0aCBkPSJNMjAgMGMxMS4wNDYgMCAyMCA4Ljk1NCAyMCAyMHMtOC45NTQgMjAtMjAgMjBTMCAzMS4wNDYgMCAyMCA4Ljk1NCAwIDIwIDB6bTAgM2MtOS4zOTEgMC0xNyA3LjYwOS0xNyAxN3M3LjYwOSAxNyAxNyAxNyAxNy03LjYwOSAxNy0xNy03LjYwOS0xNy0xNy0xN3oiLz48L2c+PC9nPjwvc3ZnPg==');
   }
 
   .glass-card {
@@ -105,5 +110,44 @@
   
   .card-hover {
     @apply transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+  }
+
+  .shine-text {
+    background: linear-gradient(to right, #c5a44f 20%, #fceebd 40%, #fceebd 60%, #c5a44f 80%);
+    background-size: 200% auto;
+    color: #000;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+  }
+
+  .buy-card {
+    @apply border-none shadow-lg relative;
+    background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(240,249,255,0.9) 100%);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(67, 143, 255, 0.1);
+  }
+
+  .sell-card {
+    @apply border-none shadow-lg relative;
+    background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,245,245,0.9) 100%);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(255, 67, 67, 0.1);
+  }
+
+  .dark .buy-card {
+    background: linear-gradient(145deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.9) 100%);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.2);
+  }
+
+  .dark .sell-card {
+    background: linear-gradient(145deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.9) 100%);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(239, 68, 68, 0.2);
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
   }
 }

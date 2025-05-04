@@ -49,29 +49,39 @@ const GoldPriceChart = ({ historicalData, currentPrice }: GoldPriceChartProps) =
   };
   
   return (
-    <Card className="glass-card h-full card-hover">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-lg">
+    <Card className="glass-card h-full card-hover border border-white/30 dark:border-white/10 shadow-lg overflow-hidden">
+      <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-white/10">
+        <CardTitle className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold-500 to-gold-700 dark:from-gold-400 dark:to-gold-600">
           Biểu đồ giá {currentPrice.type}
         </CardTitle>
         <Tabs defaultValue="7d" onValueChange={(value) => setTimeFrame(value as any)}>
-          <TabsList className="h-8">
-            <TabsTrigger value="7d" className="text-xs px-2">7 ngày</TabsTrigger>
-            <TabsTrigger value="15d" className="text-xs px-2">15 ngày</TabsTrigger>
-            <TabsTrigger value="30d" className="text-xs px-2">30 ngày</TabsTrigger>
+          <TabsList className="h-9 bg-white/50 dark:bg-navy-800/50 rounded-lg">
+            <TabsTrigger value="7d" className="text-xs px-3">7 ngày</TabsTrigger>
+            <TabsTrigger value="15d" className="text-xs px-3">15 ngày</TabsTrigger>
+            <TabsTrigger value="30d" className="text-xs px-3">30 ngày</TabsTrigger>
           </TabsList>
         </Tabs>
       </CardHeader>
-      <CardContent className="p-1 pt-4 h-[350px]">
+      <CardContent className="p-4 h-[350px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={chartData}
-            margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+            margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
           >
+            <defs>
+              <linearGradient id="buyGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="sellGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#EF4444" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis 
               dataKey="date" 
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: '#888' }}
               tickLine={{ stroke: 'rgba(255,255,255,0.1)' }}
               axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
             />
@@ -79,7 +89,7 @@ const GoldPriceChart = ({ historicalData, currentPrice }: GoldPriceChartProps) =
               domain={[minPrice, maxPrice]} 
               tickFormatter={formatPrice}
               width={80}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: '#888' }}
               tickLine={{ stroke: 'rgba(255,255,255,0.1)' }}
               axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
             />
@@ -87,31 +97,41 @@ const GoldPriceChart = ({ historicalData, currentPrice }: GoldPriceChartProps) =
               formatter={(value: number) => [formatPrice(value), '']}
               labelFormatter={(label) => `Ngày: ${label}`}
               contentStyle={{ 
-                backgroundColor: 'rgba(17, 25, 40, 0.8)', 
+                backgroundColor: 'rgba(255, 255, 255, 0.95)', 
                 border: 'none', 
                 borderRadius: '8px', 
                 padding: '10px',
-                color: 'white' 
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                color: '#333' 
               }}
+              cursor={{ stroke: '#ddd', strokeWidth: 1, strokeDasharray: '5 5' }}
             />
-            <Legend />
+            <Legend 
+              verticalAlign="top"
+              height={36}
+              iconType="circle"
+              iconSize={10}
+              wrapperStyle={{ paddingTop: '10px' }}
+            />
             <Line 
               type="monotone" 
               dataKey="buyPrice" 
               name="Mua vào"
               stroke="#3B82F6" 
-              strokeWidth={2}
+              strokeWidth={3}
               dot={false}
-              activeDot={{ r: 6, strokeWidth: 0 }}
+              activeDot={{ r: 6, strokeWidth: 0, fill: '#3B82F6' }}
+              fill="url(#buyGradient)"
             />
             <Line 
               type="monotone" 
               dataKey="sellPrice" 
               name="Bán ra"
               stroke="#EF4444" 
-              strokeWidth={2}
+              strokeWidth={3}
               dot={false}
-              activeDot={{ r: 6, strokeWidth: 0 }}
+              activeDot={{ r: 6, strokeWidth: 0, fill: '#EF4444' }}
+              fill="url(#sellGradient)"
             />
           </LineChart>
         </ResponsiveContainer>

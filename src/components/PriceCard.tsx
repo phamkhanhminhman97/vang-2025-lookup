@@ -17,11 +17,16 @@ const PriceCard = ({ price, type }: PriceCardProps) => {
   const formattedPrice = new Intl.NumberFormat('vi-VN').format(priceValue);
   
   return (
-    <Card className={`glass-card card-hover overflow-hidden ${type === 'buy' ? 'border-l-4 border-l-blue-500' : 'border-l-4 border-l-red-500'}`}>
+    <Card className={`glass-card card-hover overflow-hidden relative ${type === 'buy' ? 'buy-card' : 'sell-card'}`}>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-20 rounded-lg"></div>
+      <div className={`absolute top-0 left-0 w-2 h-full ${type === 'buy' ? 'bg-blue-500' : 'bg-red-500'}`}></div>
+      
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center justify-between">
-          <span className="text-lg">{type === 'buy' ? 'Mua vào' : 'Bán ra'}</span>
-          <div className={`flex items-center text-sm ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+          <span className={`text-lg font-bold ${type === 'buy' ? 'text-blue-500' : 'text-red-500'}`}>
+            {type === 'buy' ? 'Mua vào' : 'Bán ra'}
+          </span>
+          <div className={`flex items-center text-sm font-medium px-2 py-1 rounded-full ${isPositive ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
             {isPositive ? (
               <ArrowUp className="w-4 h-4 mr-1" />
             ) : (
@@ -32,7 +37,7 @@ const PriceCard = ({ price, type }: PriceCardProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-3xl font-bold text-navy-900 dark:text-gold-400">{formattedPrice}</div>
+        <div className="text-3xl font-bold text-navy-900 dark:text-gold-400 shine-text">{formattedPrice}</div>
         <div className="mt-1 text-sm text-muted-foreground">{price.unit}</div>
       </CardContent>
     </Card>

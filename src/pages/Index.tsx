@@ -25,8 +25,8 @@ const Index = () => {
   const featuredHistoricalData = currentProviderHistoricalData[0];
   
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-background to-muted">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMjIiIGZpbGwtb3BhY2l0eT0iLjAxIj48cGF0aCBkPSJNMzYgMzRoLTJ2LTJoMnYyek0zNCAzNGgtMnYtMmgydjJ6TTM2IDMyaC0ydi0yaDJ2MnpNMzQgMzJoLTJ2LTJoMnYyek0zNiAzMGgtMnYtMmgydjJ6TTM0IDMwaC0ydi0yaDJ2MnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30 pointer-events-none"></div>
+    <div className="flex min-h-screen flex-col">
+      <div className="absolute inset-0 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMjIiIGZpbGwtb3BhY2l0eT0iLjAxIj48cGF0aCBkPSJNMzYgMzRoLTJ2LTJoMnYyek0zNCAzNGgtMnYtMmgydjJ6TTM2IDMyaC0ydi0yaDJ2MnpNMzQgMzJoLTJ2LTJoMnYyek0zNiAzMGgtMnYtMmgydjJ6TTM0IDMwaC0ydi0yaDJ2MnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
       
       {/* Header */}
       <Header 
@@ -49,20 +49,22 @@ const Index = () => {
                     <Skeleton className="h-32" />
                   </div>
                 </div>
-                <Skeleton className="h-[350px]" />
+                <Skeleton className="h-[350px] rounded-xl" />
               </div>
               
               {/* Price table skeleton */}
-              <Skeleton className="h-72" />
+              <Skeleton className="h-72 rounded-xl" />
             </div>
           ) : (
             <div className="space-y-8 animate-fade-in">
               {/* Featured price */}
               {featuredPrice && featuredHistoricalData && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col gap-4">
-                    <h2 className="text-xl font-bold">
-                      {featuredPrice.type} - {featuredPrice.provider}
+                  <div className="flex flex-col gap-6">
+                    <h2 className="text-2xl font-bold">
+                      <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold-500 to-gold-700 dark:from-gold-400 dark:to-gold-600">
+                        {featuredPrice.type} - {featuredPrice.provider}
+                      </span>
                     </h2>
                     <div className="grid grid-cols-2 gap-4">
                       <PriceCard price={featuredPrice} type="buy" />
